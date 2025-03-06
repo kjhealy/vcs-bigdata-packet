@@ -1,5 +1,12 @@
 [
   {
+    "objectID": "slides/vcs-bigdata-01.html#workshop-materials",
+    "href": "slides/vcs-bigdata-01.html#workshop-materials",
+    "title": "‘Big’ Data with R and ggplot",
+    "section": "Workshop materials",
+    "text": "Workshop materials\n\nWorkshop materials (and more besides) are available at https://github.com/kjhealy/vcs-bigdata-packet\nYou can get a zip file of everything at https://github.com/kjhealy/vcs-bigdata-packet/archive/refs/heads/main.zip\nOr clone the repository if you are familiar with git."
+  },
+  {
     "objectID": "slides/vcs-bigdata-01.html#load-some-packages",
     "href": "slides/vcs-bigdata-01.html#load-some-packages",
     "title": "‘Big’ Data with R and ggplot",
@@ -298,7 +305,7 @@
     "href": "slides/vcs-bigdata-01.html#weak-associations",
     "title": "‘Big’ Data with R and ggplot",
     "section": "Weak Associations",
-    "text": "Weak Associations\n\ndf\n\n# A tibble: 50,000 × 2\n       x     y\n   &lt;dbl&gt; &lt;dbl&gt;\n 1  47.9  55.8\n 2  60.1  74.3\n 3  53.0  62.3\n 4  40.0  75.6\n 5  35.6  36.1\n 6  51.9  57.1\n 7  58.6  64.4\n 8  30.8  65.2\n 9  38.0  24.8\n10  40.0  29.8\n# ℹ 49,990 more rows\n\ncor(df$x, df$y)\n\n[1] 0.1944075\n\n\nBy design, x and y are weakly correlated."
+    "text": "Weak Associations\n\ndf\n\n# A tibble: 50,000 × 2\n       x     y\n   &lt;dbl&gt; &lt;dbl&gt;\n 1  55.9  34.6\n 2  41.4  61.1\n 3  65.1  45.7\n 4  50.4  45.3\n 5  64.5  70.3\n 6  55.8  81.7\n 7  36.1  19.0\n 8  27.8  81.2\n 9  47.6  55.1\n10  21.2  30.8\n# ℹ 49,990 more rows\n\ncor(df$x, df$y)\n\n[1] 0.2006598\n\n\nBy design, x and y are weakly correlated."
   },
   {
     "objectID": "slides/vcs-bigdata-01.html#scatterplot",
@@ -312,7 +319,7 @@
     "href": "slides/vcs-bigdata-01.html#you-might-be-tempted",
     "title": "‘Big’ Data with R and ggplot",
     "section": "You might be tempted",
-    "text": "You might be tempted\n\nDiscretizing or binning a continuous variable in order to get a bit of leverage over a second variable is a thing people do, but generally should not.\nE.g., split x into deciles, then take the mean of y within each x decile.\n\n\ndeciles &lt;- seq(0, 1, 0.1)\n\ndf &lt;- df |&gt;\n  mutate(x_c = cut(x, quantile(x, deciles))) |&gt; \n  group_by(x_c) |&gt; \n  summarize(y_mean = mean(y)) |&gt; \n  drop_na() \n\ndf\n\n# A tibble: 10 × 2\n   x_c         y_mean\n   &lt;fct&gt;        &lt;dbl&gt;\n 1 (-15,25.9]    38.4\n 2 (25.9,32.5]   40.8\n 3 (32.5,37.2]   42.4\n 4 (37.2,41.2]   43.2\n 5 (41.2,45]     44.7\n 6 (45,48.8]     45.7\n 7 (48.8,52.8]   46.4\n 8 (52.8,57.5]   47.3\n 9 (57.5,64.1]   49.2\n10 (64.1,105]    52.0"
+    "text": "You might be tempted\n\nDiscretizing or binning a continuous variable in order to get a bit of leverage over a second variable is a thing people do, but generally should not.\nE.g., split x into deciles, then take the mean of y within each x decile.\n\n\ndeciles &lt;- seq(0, 1, 0.1)\n\ndf &lt;- df |&gt;\n  mutate(x_c = cut(x, quantile(x, deciles))) |&gt; \n  group_by(x_c) |&gt; \n  summarize(y_mean = mean(y)) |&gt; \n  drop_na() \n\ndf\n\n# A tibble: 10 × 2\n   x_c          y_mean\n   &lt;fct&gt;         &lt;dbl&gt;\n 1 (-17.5,25.9]   37.8\n 2 (25.9,32.4]    40.7\n 3 (32.4,37.2]    42.3\n 4 (37.2,41.2]    43.3\n 5 (41.2,45.1]    44.4\n 6 (45.1,48.9]    45.8\n 7 (48.9,53]      46.7\n 8 (53,57.7]      47.4\n 9 (57.7,64.3]    49.1\n10 (64.3,107]     51.9"
   },
   {
     "objectID": "slides/vcs-bigdata-01.html#number-go-up",
@@ -543,7 +550,7 @@
     "href": "slides/vcs-bigdata-01.html#grouped-analysis-and-list-columns-11",
     "title": "‘Big’ Data with R and ggplot",
     "section": "Grouped analysis and list columns",
-    "text": "Grouped analysis and list columns\n\ndf_tidy |&gt; \n    ungroup() |&gt;\n    sample_n(5)\n\n# A tibble: 5 × 9\n  continent  year data     model  term      estimate std.error statistic p.value\n  &lt;fct&gt;     &lt;int&gt; &lt;list&gt;   &lt;list&gt; &lt;chr&gt;        &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;\n1 Africa     2002 &lt;tibble&gt; &lt;lm&gt;   log(gdpP…     5.16     1.21       4.25 9.20e-5\n2 Americas   1952 &lt;tibble&gt; &lt;lm&gt;   log(gdpP…    10.4      2.72       3.84 8.27e-4\n3 Europe     2007 &lt;tibble&gt; &lt;lm&gt;   log(gdpP…     4.23     0.525      8.06 8.98e-9\n4 Americas   1977 &lt;tibble&gt; &lt;lm&gt;   log(gdpP…     8.21     1.83       4.50 1.63e-4\n5 Europe     1967 &lt;tibble&gt; &lt;lm&gt;   log(gdpP…     5.43     0.796      6.82 2.09e-7"
+    "text": "Grouped analysis and list columns\n\ndf_tidy |&gt; \n    ungroup() |&gt;\n    sample_n(5)\n\n# A tibble: 5 × 9\n  continent  year data     model  term      estimate std.error statistic p.value\n  &lt;fct&gt;     &lt;int&gt; &lt;list&gt;   &lt;list&gt; &lt;chr&gt;        &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;\n1 Africa     1977 &lt;tibble&gt; &lt;lm&gt;   log(gdpP…     4.51     0.920      4.90 1.04e-5\n2 Americas   1987 &lt;tibble&gt; &lt;lm&gt;   log(gdpP…     7.10     1.14       6.25 2.22e-6\n3 Africa     1992 &lt;tibble&gt; &lt;lm&gt;   log(gdpP…     7.33     1.10       6.64 2.22e-8\n4 Americas   1962 &lt;tibble&gt; &lt;lm&gt;   log(gdpP…    10.4      2.27       4.57 1.35e-4\n5 Asia       1952 &lt;tibble&gt; &lt;lm&gt;   log(gdpP…     4.16     1.25       3.33 2.28e-3"
   },
   {
     "objectID": "slides/vcs-bigdata-01.html#nesting-other-things",
@@ -634,13 +641,251 @@
     "href": "index.html",
     "title": "Visualizing Big Data with R and ggplot",
     "section": "",
-    "text": "Click the links to see the slides.\n\nBig Data is just Data"
+    "text": "Click the links to see the slides.\n\nBig Data is just Data\nA Database and duckdb example"
   },
   {
     "objectID": "index.html#slides-for-the-workshop",
     "href": "index.html#slides-for-the-workshop",
     "title": "Visualizing Big Data with R and ggplot",
     "section": "",
-    "text": "Click the links to see the slides.\n\nBig Data is just Data"
+    "text": "Click the links to see the slides.\n\nBig Data is just Data\nA Database and duckdb example"
+  },
+  {
+    "objectID": "slides/vcs-bigdata-02.html#load-the-packages",
+    "href": "slides/vcs-bigdata-02.html#load-the-packages",
+    "title": "Databases and duckdb",
+    "section": "Load the packages",
+    "text": "Load the packages\n\nlibrary(here)      # manage file paths\nlibrary(socviz)    # data and some useful functions\nlibrary(tidyverse) # your friend and mine\nlibrary(gapminder) # inescapable\n\nlibrary(DBI) # DBMS interface layer\nlibrary(duckdb) # Local database server"
+  },
+  {
+    "objectID": "slides/vcs-bigdata-02.html#what-were-talking-about",
+    "href": "slides/vcs-bigdata-02.html#what-were-talking-about",
+    "title": "Databases and duckdb",
+    "section": "What we’re talking about",
+    "text": "What we’re talking about\nMostly in this case, datasets that are nominally larger than your laptop’s memory.\nThere are other more specific uses, and truly huge data is beyond the scope of the course. But we can look at methods for working with data that’s “big” for all practical purposes."
+  },
+  {
+    "objectID": "slides/vcs-bigdata-02.html#databases",
+    "href": "slides/vcs-bigdata-02.html#databases",
+    "title": "Databases and duckdb",
+    "section": "Databases",
+    "text": "Databases\nWhen we’re working with data in the social sciences the basic case is a single table that we’re going to do something with, like run a regression or make a plot.\n\ngapminder\n\n# A tibble: 1,704 × 6\n   country     continent  year lifeExp      pop gdpPercap\n   &lt;fct&gt;       &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt;\n 1 Afghanistan Asia       1952    28.8  8425333      779.\n 2 Afghanistan Asia       1957    30.3  9240934      821.\n 3 Afghanistan Asia       1962    32.0 10267083      853.\n 4 Afghanistan Asia       1967    34.0 11537966      836.\n 5 Afghanistan Asia       1972    36.1 13079460      740.\n 6 Afghanistan Asia       1977    38.4 14880372      786.\n 7 Afghanistan Asia       1982    39.9 12881816      978.\n 8 Afghanistan Asia       1987    40.8 13867957      852.\n 9 Afghanistan Asia       1992    41.7 16317921      649.\n10 Afghanistan Asia       1997    41.8 22227415      635.\n# ℹ 1,694 more rows\n\n\nBut the bigger a dataset gets, the more we have to think about whether we really want (or even can have) all of it in memory all the time."
+  },
+  {
+    "objectID": "slides/vcs-bigdata-02.html#databases-1",
+    "href": "slides/vcs-bigdata-02.html#databases-1",
+    "title": "Databases and duckdb",
+    "section": "Databases",
+    "text": "Databases\nIn addition, much of what we want to do with a specific dataset will involve actually acting on some relatively small subset of it.\n\ngapminder |&gt; \n  select(gdpPercap, lifeExp)\n\n# A tibble: 1,704 × 2\n   gdpPercap lifeExp\n       &lt;dbl&gt;   &lt;dbl&gt;\n 1      779.    28.8\n 2      821.    30.3\n 3      853.    32.0\n 4      836.    34.0\n 5      740.    36.1\n 6      786.    38.4\n 7      978.    39.9\n 8      852.    40.8\n 9      649.    41.7\n10      635.    41.8\n# ℹ 1,694 more rows"
+  },
+  {
+    "objectID": "slides/vcs-bigdata-02.html#databases-2",
+    "href": "slides/vcs-bigdata-02.html#databases-2",
+    "title": "Databases and duckdb",
+    "section": "Databases",
+    "text": "Databases\nIn addition, much of what we want to do with a specific dataset will involve actually acting on some relatively small subset of it.\n\ngapminder |&gt; \n  filter(continent == \"Europe\", \n         year == 1977)\n\n# A tibble: 30 × 6\n   country                continent  year lifeExp      pop gdpPercap\n   &lt;fct&gt;                  &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt;\n 1 Albania                Europe     1977    68.9  2509048     3533.\n 2 Austria                Europe     1977    72.2  7568430    19749.\n 3 Belgium                Europe     1977    72.8  9821800    19118.\n 4 Bosnia and Herzegovina Europe     1977    69.9  4086000     3528.\n 5 Bulgaria               Europe     1977    70.8  8797022     7612.\n 6 Croatia                Europe     1977    70.6  4318673    11305.\n 7 Czech Republic         Europe     1977    70.7 10161915    14800.\n 8 Denmark                Europe     1977    74.7  5088419    20423.\n 9 Finland                Europe     1977    72.5  4738902    15605.\n10 France                 Europe     1977    73.8 53165019    18293.\n# ℹ 20 more rows"
+  },
+  {
+    "objectID": "slides/vcs-bigdata-02.html#databases-3",
+    "href": "slides/vcs-bigdata-02.html#databases-3",
+    "title": "Databases and duckdb",
+    "section": "Databases",
+    "text": "Databases\nIn addition, much of what we want to do with a specific dataset will involve actually acting on some relatively small subset of it.\n\ngapminder |&gt; \n  group_by(continent) |&gt; \n  summarize(lifeExp = mean(lifeExp), \n            pop = mean(pop), \n            gdpPercap = mean(gdpPercap))\n\n# A tibble: 5 × 4\n  continent lifeExp       pop gdpPercap\n  &lt;fct&gt;       &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;\n1 Africa       48.9  9916003.     2194.\n2 Americas     64.7 24504795.     7136.\n3 Asia         60.1 77038722.     7902.\n4 Europe       71.9 17169765.    14469.\n5 Oceania      74.3  8874672.    18622."
+  },
+  {
+    "objectID": "slides/vcs-bigdata-02.html#databases-4",
+    "href": "slides/vcs-bigdata-02.html#databases-4",
+    "title": "Databases and duckdb",
+    "section": "Databases",
+    "text": "Databases\nEfficiently storing and querying really large quantities of data is the realm of the database and of Structured Query Languages.\nAs with everything in information technology there is a long and interesting story about various efforts to come up with a good theory of data storage and retrieval, and efficient algorithms for it. If you are interested, watch e.g. this lecture from a DBMS course from about twelve minutes in."
+  },
+  {
+    "objectID": "slides/vcs-bigdata-02.html#wheres-the-database",
+    "href": "slides/vcs-bigdata-02.html#wheres-the-database",
+    "title": "Databases and duckdb",
+    "section": "Where’s the database?",
+    "text": "Where’s the database?\nLocal or remote?\nOn disk or in memory?\nThe important thing from the database admin’s point of view is that the data is stored efficiently, that we have a means of querying it, and those queries rely on some search-and-retrieval method that’s really fast.\nThere’s no free lunch. We want storage methods to be efficient and queries to be fast because the datasets are gonna be gigantic, and accessing them will take time."
+  },
+  {
+    "objectID": "slides/vcs-bigdata-02.html#database-layouts",
+    "href": "slides/vcs-bigdata-02.html#database-layouts",
+    "title": "Databases and duckdb",
+    "section": "Database layouts",
+    "text": "Database layouts\nA real database is usually not a single giant table. Instead it is more like a list of tables that are partially connected through keys shared between tables. Those keys are indexed and the tables are stored in a tree-like way that makes searching much faster than just going down each row and looking for matches.\nFrom a social science perspective, putting things in different tables might be thought of a matter of logically organizing entities at different units of observation. Querying tables is a matter of assembling tables ad hoc at various units of analysis."
+  },
+  {
+    "objectID": "slides/vcs-bigdata-02.html#database-layouts-1",
+    "href": "slides/vcs-bigdata-02.html#database-layouts-1",
+    "title": "Databases and duckdb",
+    "section": "Database layouts",
+    "text": "Database layouts\n\n\ngapminder_xtra &lt;- read_csv(here(\"examples\", \"gapminder_xtra.csv\"))\ngapminder_xtra\n\n# A tibble: 1,704 × 13\n   country     continent  year lifeExp      pop gdpPercap area_pct pop_pct\n   &lt;chr&gt;       &lt;chr&gt;     &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;\n 1 Afghanistan Asia       1952    28.8  8425333      779.     29.8    59.4\n 2 Afghanistan Asia       1957    30.3  9240934      821.     29.8    59.4\n 3 Afghanistan Asia       1962    32.0 10267083      853.     29.8    59.4\n 4 Afghanistan Asia       1967    34.0 11537966      836.     29.8    59.4\n 5 Afghanistan Asia       1972    36.1 13079460      740.     29.8    59.4\n 6 Afghanistan Asia       1977    38.4 14880372      786.     29.8    59.4\n 7 Afghanistan Asia       1982    39.9 12881816      978.     29.8    59.4\n 8 Afghanistan Asia       1987    40.8 13867957      852.     29.8    59.4\n 9 Afghanistan Asia       1992    41.7 16317921      649.     29.8    59.4\n10 Afghanistan Asia       1997    41.8 22227415      635.     29.8    59.4\n# ℹ 1,694 more rows\n# ℹ 5 more variables: gm_countries &lt;dbl&gt;, country_fr &lt;chr&gt;, iso2 &lt;chr&gt;,\n#   iso3 &lt;chr&gt;, number &lt;dbl&gt;\n\n\n\nAgain, in social science terms, the redundancies are annoying in part because they apply to different levels or units of observation. From a Database point of view they are also bad because they allow the possibility of a variety of errors or anomalies when updating the table, and they make things really inefficient for search and querying."
+  },
+  {
+    "objectID": "slides/vcs-bigdata-02.html#database-normalization",
+    "href": "slides/vcs-bigdata-02.html#database-normalization",
+    "title": "Databases and duckdb",
+    "section": "Database normalization",
+    "text": "Database normalization\nA hierarchical set of rules and criteria for ensuring the integrity of data stored across multiple tables and for reducing redundancy in data storage.\nTries to eliminate various sources of error — so-called Insertion, Update, and Deletion anomalies — particularly ones that will pollute, damage, or corrupt things beyond the specific change.\nRedundancy and error are minimized by breaking the database up into a series of linked or related tables. Hence the term “relational database”"
+  },
+  {
+    "objectID": "slides/vcs-bigdata-02.html#normal-forms",
+    "href": "slides/vcs-bigdata-02.html#normal-forms",
+    "title": "Databases and duckdb",
+    "section": "Normal Forms",
+    "text": "Normal Forms\n0NF: No duplicate rows!\n1NF: Using row order to convey information is not allowed; Mixing data types in the same column is not allowed; No table without a primary key is not allowed. Primary keys can be defined by more than one column though.\n2NF: Each non-key attribute must depend on the entire primary key\n3NF: Every non-key attribute should depend wholly and only on the key.\nThink of these rules in connection with ideas about “tidy data”."
+  },
+  {
+    "objectID": "slides/vcs-bigdata-02.html#database-normalization-1",
+    "href": "slides/vcs-bigdata-02.html#database-normalization-1",
+    "title": "Databases and duckdb",
+    "section": "Database normalization",
+    "text": "Database normalization\n\ngapminder_xtra\n\n# A tibble: 1,704 × 13\n   country     continent  year lifeExp      pop gdpPercap area_pct pop_pct\n   &lt;chr&gt;       &lt;chr&gt;     &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;\n 1 Afghanistan Asia       1952    28.8  8425333      779.     29.8    59.4\n 2 Afghanistan Asia       1957    30.3  9240934      821.     29.8    59.4\n 3 Afghanistan Asia       1962    32.0 10267083      853.     29.8    59.4\n 4 Afghanistan Asia       1967    34.0 11537966      836.     29.8    59.4\n 5 Afghanistan Asia       1972    36.1 13079460      740.     29.8    59.4\n 6 Afghanistan Asia       1977    38.4 14880372      786.     29.8    59.4\n 7 Afghanistan Asia       1982    39.9 12881816      978.     29.8    59.4\n 8 Afghanistan Asia       1987    40.8 13867957      852.     29.8    59.4\n 9 Afghanistan Asia       1992    41.7 16317921      649.     29.8    59.4\n10 Afghanistan Asia       1997    41.8 22227415      635.     29.8    59.4\n# ℹ 1,694 more rows\n# ℹ 5 more variables: gm_countries &lt;dbl&gt;, country_fr &lt;chr&gt;, iso2 &lt;chr&gt;,\n#   iso3 &lt;chr&gt;, number &lt;dbl&gt;"
+  },
+  {
+    "objectID": "slides/vcs-bigdata-02.html#database-normalization-2",
+    "href": "slides/vcs-bigdata-02.html#database-normalization-2",
+    "title": "Databases and duckdb",
+    "section": "Database normalization",
+    "text": "Database normalization\n\ngapminder\n\n# A tibble: 1,704 × 6\n   country     continent  year lifeExp      pop gdpPercap\n   &lt;fct&gt;       &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt;\n 1 Afghanistan Asia       1952    28.8  8425333      779.\n 2 Afghanistan Asia       1957    30.3  9240934      821.\n 3 Afghanistan Asia       1962    32.0 10267083      853.\n 4 Afghanistan Asia       1967    34.0 11537966      836.\n 5 Afghanistan Asia       1972    36.1 13079460      740.\n 6 Afghanistan Asia       1977    38.4 14880372      786.\n 7 Afghanistan Asia       1982    39.9 12881816      978.\n 8 Afghanistan Asia       1987    40.8 13867957      852.\n 9 Afghanistan Asia       1992    41.7 16317921      649.\n10 Afghanistan Asia       1997    41.8 22227415      635.\n# ℹ 1,694 more rows"
+  },
+  {
+    "objectID": "slides/vcs-bigdata-02.html#database-normalization-3",
+    "href": "slides/vcs-bigdata-02.html#database-normalization-3",
+    "title": "Databases and duckdb",
+    "section": "Database normalization",
+    "text": "Database normalization\n\n\ncontinent_tbl &lt;- read_tsv(here(\"examples\", \"continent_tab.tsv\")) \ncountry_tbl &lt;- read_tsv(here(\"examples\", \"country_tab.tsv\"))\nyear_tbl &lt;-  read_tsv(here(\"examples\", \"year_tab.tsv\"))  \n  \ncontinent_tbl\n\n# A tibble: 5 × 5\n  continent_id continent area_pct pop_pct gm_countries\n         &lt;dbl&gt; &lt;chr&gt;        &lt;dbl&gt;   &lt;dbl&gt;        &lt;dbl&gt;\n1            1 Africa        20.3    17.6           52\n2            2 Americas      28.1    13             25\n3            3 Asia          29.8    59.4           33\n4            4 Europe         6.7     9.4           30\n5            5 Oceania        5.7     0.6            2\n\ngapminder\n\n# A tibble: 1,704 × 6\n   country     continent  year lifeExp      pop gdpPercap\n   &lt;fct&gt;       &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt;\n 1 Afghanistan Asia       1952    28.8  8425333      779.\n 2 Afghanistan Asia       1957    30.3  9240934      821.\n 3 Afghanistan Asia       1962    32.0 10267083      853.\n 4 Afghanistan Asia       1967    34.0 11537966      836.\n 5 Afghanistan Asia       1972    36.1 13079460      740.\n 6 Afghanistan Asia       1977    38.4 14880372      786.\n 7 Afghanistan Asia       1982    39.9 12881816      978.\n 8 Afghanistan Asia       1987    40.8 13867957      852.\n 9 Afghanistan Asia       1992    41.7 16317921      649.\n10 Afghanistan Asia       1997    41.8 22227415      635.\n# ℹ 1,694 more rows"
+  },
+  {
+    "objectID": "slides/vcs-bigdata-02.html#database-normalization-4",
+    "href": "slides/vcs-bigdata-02.html#database-normalization-4",
+    "title": "Databases and duckdb",
+    "section": "Database normalization",
+    "text": "Database normalization\n\n\ncontinent_tbl\n\n# A tibble: 5 × 5\n  continent_id continent area_pct pop_pct gm_countries\n         &lt;dbl&gt; &lt;chr&gt;        &lt;dbl&gt;   &lt;dbl&gt;        &lt;dbl&gt;\n1            1 Africa        20.3    17.6           52\n2            2 Americas      28.1    13             25\n3            3 Asia          29.8    59.4           33\n4            4 Europe         6.7     9.4           30\n5            5 Oceania        5.7     0.6            2\n\ncountry_tbl\n\n# A tibble: 249 × 8\n   country_id continent_id country     iso_country country_fr iso2  iso3  number\n        &lt;dbl&gt;        &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;       &lt;chr&gt;      &lt;chr&gt; &lt;chr&gt;  &lt;dbl&gt;\n 1          1            3 Afghanistan Afghanistan Afghanist… AF    AFG        4\n 2          2            4 Albania     Albania     Albanie (… AL    ALB        8\n 3          3            1 Algeria     Algeria     Algérie (… DZ    DZA       12\n 4          4           NA &lt;NA&gt;        American S… Samoa amé… AS    ASM       16\n 5          5           NA &lt;NA&gt;        Andorra     Andorre (… AD    AND       20\n 6          6            1 Angola      Angola      Angola (l… AO    AGO       24\n 7          7           NA Anguilla    Anguilla    Anguilla   AI    AIA      660\n 8          8           NA Antarctica  Antarctica  Antarctiq… AQ    ATA       10\n 9          9           NA Antigua an… Antigua an… Antigua-e… AG    ATG       28\n10         10            2 Argentina   Argentina   Argentine… AR    ARG       32\n# ℹ 239 more rows"
+  },
+  {
+    "objectID": "slides/vcs-bigdata-02.html#database-normalization-5",
+    "href": "slides/vcs-bigdata-02.html#database-normalization-5",
+    "title": "Databases and duckdb",
+    "section": "Database normalization",
+    "text": "Database normalization\n\n\ncountry_tbl\n\n# A tibble: 249 × 8\n   country_id continent_id country     iso_country country_fr iso2  iso3  number\n        &lt;dbl&gt;        &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;       &lt;chr&gt;      &lt;chr&gt; &lt;chr&gt;  &lt;dbl&gt;\n 1          1            3 Afghanistan Afghanistan Afghanist… AF    AFG        4\n 2          2            4 Albania     Albania     Albanie (… AL    ALB        8\n 3          3            1 Algeria     Algeria     Algérie (… DZ    DZA       12\n 4          4           NA &lt;NA&gt;        American S… Samoa amé… AS    ASM       16\n 5          5           NA &lt;NA&gt;        Andorra     Andorre (… AD    AND       20\n 6          6            1 Angola      Angola      Angola (l… AO    AGO       24\n 7          7           NA Anguilla    Anguilla    Anguilla   AI    AIA      660\n 8          8           NA Antarctica  Antarctica  Antarctiq… AQ    ATA       10\n 9          9           NA Antigua an… Antigua an… Antigua-e… AG    ATG       28\n10         10            2 Argentina   Argentina   Argentine… AR    ARG       32\n# ℹ 239 more rows\n\nyear_tbl\n\n# A tibble: 1,704 × 5\n    year country_id lifeExp      pop gdpPercap\n   &lt;dbl&gt;      &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;\n 1  1952          1    28.8  8425333      779.\n 2  1957          1    30.3  9240934      821.\n 3  1962          1    32.0 10267083      853.\n 4  1967          1    34.0 11537966      836.\n 5  1972          1    36.1 13079460      740.\n 6  1977          1    38.4 14880372      786.\n 7  1982          1    39.9 12881816      978.\n 8  1987          1    40.8 13867957      852.\n 9  1992          1    41.7 16317921      649.\n10  1997          1    41.8 22227415      635.\n# ℹ 1,694 more rows"
+  },
+  {
+    "objectID": "slides/vcs-bigdata-02.html#the-main-idea",
+    "href": "slides/vcs-bigdata-02.html#the-main-idea",
+    "title": "Databases and duckdb",
+    "section": "The main idea",
+    "text": "The main idea\nUltimately, we query databases with SQL. There are several varieties, because there are a variety of database systems and each has their own wrinkles and quirks.\nWe try to abstract away from some of those quirk by using a DBI (DataBase Interface) layer, which is a generic set of commands for talking to some database. It’s analogous to an API.\nWe also need to use a package for the DBMS we’re talking to. It translates DBI instructions into the specific dialect the DBMS speaks."
+  },
+  {
+    "objectID": "slides/vcs-bigdata-02.html#talking-to-databases-1",
+    "href": "slides/vcs-bigdata-02.html#talking-to-databases-1",
+    "title": "Databases and duckdb",
+    "section": "Talking to databases",
+    "text": "Talking to databases\nSome databases are small, and some are far away.\nClient-server databases are like websites, serving up responses to queries. The database lives on a machine somewhere in the building, or on campus or whatever.\nCloud DBMSs are like this, too, except the database lives on a machine in someone else’s building.\nIn-process DBMSs live and run on your laptop. We’ll use one of these, duckdb for examples here."
+  },
+  {
+    "objectID": "slides/vcs-bigdata-02.html#talking-to-databases-2",
+    "href": "slides/vcs-bigdata-02.html#talking-to-databases-2",
+    "title": "Databases and duckdb",
+    "section": "Talking to databases",
+    "text": "Talking to databases\nWe need to open a connection to a database before talking to it. Conventionally this is called con.\nOnce connected, we ask it questions. Either we use functions or packages designed to translate our R / dplyr syntax into SQL, or we use functions to pass SQL queries on directly.\nWe try to minimize the amount of time we are actually making the database do a lot of work.\nThe key thing is that when working with databases our queries are lazy — they don’t actually do anything on the whole database unless its strictly necessary or they’re explicitly told to."
+  },
+  {
+    "objectID": "slides/vcs-bigdata-02.html#the-nice-example",
+    "href": "slides/vcs-bigdata-02.html#the-nice-example",
+    "title": "Databases and duckdb",
+    "section": "The nice example",
+    "text": "The nice example\nWhere everything is lovely and clean."
+  },
+  {
+    "objectID": "slides/vcs-bigdata-02.html#duckdb-and-dbi",
+    "href": "slides/vcs-bigdata-02.html#duckdb-and-dbi",
+    "title": "Databases and duckdb",
+    "section": "duckdb and DBI",
+    "text": "duckdb and DBI\n\n# library(DBI)\n\ncon &lt;- dbConnect(duckdb::duckdb(), path = \":memory:\")\n\nHere we open a connection to an in-memory duckdb database (rather than a file we will keep for later). It’s empty. We’re going to populate it with data from nycflights13."
+  },
+  {
+    "objectID": "slides/vcs-bigdata-02.html#duckdb-and-dbi-1",
+    "href": "slides/vcs-bigdata-02.html#duckdb-and-dbi-1",
+    "title": "Databases and duckdb",
+    "section": "duckdb and DBI",
+    "text": "duckdb and DBI\n\ncopy_to(\n  dest = con, \n  df = nycflights13::flights, \n  name = \"flights\",\n  temporary = FALSE, \n  indexes = list(\n    c(\"year\", \"month\", \"day\"), \n    \"carrier\", \n    \"tailnum\",\n    \"dest\"\n    )\n  )\n\nRemember, keys and indexes are what make databases fast."
+  },
+  {
+    "objectID": "slides/vcs-bigdata-02.html#make-a-lazy-tibble-from-it",
+    "href": "slides/vcs-bigdata-02.html#make-a-lazy-tibble-from-it",
+    "title": "Databases and duckdb",
+    "section": "Make a lazy tibble from it",
+    "text": "Make a lazy tibble from it\nThis says “go to con and get the ‘flights’ table in it, and pretend it’s a tibble called flights_db.\n\nflights_db &lt;- tbl(con, \"flights\")\n\nflights_db\n\n# Source:   table&lt;flights&gt; [?? x 19]\n# Database: DuckDB v1.1.3 [root@Darwin 24.3.0:R 4.4.3/:memory:]\n    year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time\n   &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;          &lt;int&gt;\n 1  2013     1     1      517            515         2      830            819\n 2  2013     1     1      533            529         4      850            830\n 3  2013     1     1      542            540         2      923            850\n 4  2013     1     1      544            545        -1     1004           1022\n 5  2013     1     1      554            600        -6      812            837\n 6  2013     1     1      554            558        -4      740            728\n 7  2013     1     1      555            600        -5      913            854\n 8  2013     1     1      557            600        -3      709            723\n 9  2013     1     1      557            600        -3      838            846\n10  2013     1     1      558            600        -2      753            745\n# ℹ more rows\n# ℹ 11 more variables: arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;,\n#   tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;,\n#   hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;"
+  },
+  {
+    "objectID": "slides/vcs-bigdata-02.html#run-some-dplyr-like-queries",
+    "href": "slides/vcs-bigdata-02.html#run-some-dplyr-like-queries",
+    "title": "Databases and duckdb",
+    "section": "Run some dplyr-like queries",
+    "text": "Run some dplyr-like queries\n\nflights_db |&gt; select(year:day, dep_delay, arr_delay)\n\n# Source:   SQL [?? x 5]\n# Database: DuckDB v1.1.3 [root@Darwin 24.3.0:R 4.4.3/:memory:]\n    year month   day dep_delay arr_delay\n   &lt;int&gt; &lt;int&gt; &lt;int&gt;     &lt;dbl&gt;     &lt;dbl&gt;\n 1  2013     1     1         2        11\n 2  2013     1     1         4        20\n 3  2013     1     1         2        33\n 4  2013     1     1        -1       -18\n 5  2013     1     1        -6       -25\n 6  2013     1     1        -4        12\n 7  2013     1     1        -5        19\n 8  2013     1     1        -3       -14\n 9  2013     1     1        -3        -8\n10  2013     1     1        -2         8\n# ℹ more rows"
+  },
+  {
+    "objectID": "slides/vcs-bigdata-02.html#run-some-dplyr-like-queries-1",
+    "href": "slides/vcs-bigdata-02.html#run-some-dplyr-like-queries-1",
+    "title": "Databases and duckdb",
+    "section": "Run some dplyr-like queries",
+    "text": "Run some dplyr-like queries\n\nflights_db |&gt; filter(dep_delay &gt; 240) \n\n# Source:   SQL [?? x 19]\n# Database: DuckDB v1.1.3 [root@Darwin 24.3.0:R 4.4.3/:memory:]\n    year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time\n   &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;          &lt;int&gt;\n 1  2013     1     1      848           1835       853     1001           1950\n 2  2013     1     1     1815           1325       290     2120           1542\n 3  2013     1     1     1842           1422       260     1958           1535\n 4  2013     1     1     2115           1700       255     2330           1920\n 5  2013     1     1     2205           1720       285       46           2040\n 6  2013     1     1     2343           1724       379      314           1938\n 7  2013     1     2     1332            904       268     1616           1128\n 8  2013     1     2     1412            838       334     1710           1147\n 9  2013     1     2     1607           1030       337     2003           1355\n10  2013     1     2     2131           1512       379     2340           1741\n# ℹ more rows\n# ℹ 11 more variables: arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;,\n#   tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;,\n#   hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;"
+  },
+  {
+    "objectID": "slides/vcs-bigdata-02.html#run-some-dplyr-like-queries-2",
+    "href": "slides/vcs-bigdata-02.html#run-some-dplyr-like-queries-2",
+    "title": "Databases and duckdb",
+    "section": "Run some dplyr-like queries",
+    "text": "Run some dplyr-like queries\n\nflights_db |&gt;\n  group_by(dest) |&gt;\n  summarise(mean_dep_delay = mean(dep_delay))\n\n# Source:   SQL [?? x 2]\n# Database: DuckDB v1.1.3 [root@Darwin 24.3.0:R 4.4.3/:memory:]\n   dest  mean_dep_delay\n   &lt;chr&gt;          &lt;dbl&gt;\n 1 SFO            12.9 \n 2 GSP            19.3 \n 3 SJU             9.81\n 4 GSO            19.4 \n 5 STT             4.61\n 6 SAN            11.1 \n 7 TYS            28.5 \n 8 EGE            15.5 \n 9 CRW            17   \n10 MTJ            17.6 \n# ℹ more rows"
+  },
+  {
+    "objectID": "slides/vcs-bigdata-02.html#lazy-lazy-lazy",
+    "href": "slides/vcs-bigdata-02.html#lazy-lazy-lazy",
+    "title": "Databases and duckdb",
+    "section": "Lazy, lazy, lazy",
+    "text": "Lazy, lazy, lazy\n\ntailnum_delay_db &lt;-  \n  flights_db |&gt; \n  group_by(tailnum) |&gt;\n  summarise(\n    mean_dep_delay = mean(dep_delay),\n    mean_arr_delay = mean(arr_delay),\n    n = n()) |&gt;\n  filter(n &gt; 100) |&gt; \n  arrange(desc(mean_arr_delay))\n\nThis doesn’t touch the database."
+  },
+  {
+    "objectID": "slides/vcs-bigdata-02.html#lazy-lazy-lazy-1",
+    "href": "slides/vcs-bigdata-02.html#lazy-lazy-lazy-1",
+    "title": "Databases and duckdb",
+    "section": "Lazy, lazy, lazy",
+    "text": "Lazy, lazy, lazy\nEven when we ask to look at it, it just does the absolute minimum required.\n\ntailnum_delay_db\n\n# Source:     SQL [?? x 4]\n# Database:   DuckDB v1.1.3 [root@Darwin 24.3.0:R 4.4.3/:memory:]\n# Ordered by: desc(mean_arr_delay)\n   tailnum mean_dep_delay mean_arr_delay     n\n   &lt;chr&gt;            &lt;dbl&gt;          &lt;dbl&gt; &lt;dbl&gt;\n 1 N11119            32.6           30.3   148\n 2 N16919            32.4           29.9   251\n 3 N14998            29.4           27.9   230\n 4 N15910            29.3           27.6   280\n 5 N13123            29.6           26.0   121\n 6 N11192            27.5           25.9   154\n 7 N14950            26.2           25.3   219\n 8 N21130            27.0           25.0   126\n 9 N24128            24.8           24.9   129\n10 N22971            26.5           24.7   230\n# ℹ more rows"
+  },
+  {
+    "objectID": "slides/vcs-bigdata-02.html#when-ready-use-collect",
+    "href": "slides/vcs-bigdata-02.html#when-ready-use-collect",
+    "title": "Databases and duckdb",
+    "section": "When ready, use collect()",
+    "text": "When ready, use collect()\n\ntailnum_delay &lt;- \n  tailnum_delay_db |&gt;  \n  collect()\n\ntailnum_delay\n\n# A tibble: 1,201 × 4\n   tailnum mean_dep_delay mean_arr_delay     n\n   &lt;chr&gt;            &lt;dbl&gt;          &lt;dbl&gt; &lt;dbl&gt;\n 1 N11119            32.6           30.3   148\n 2 N16919            32.4           29.9   251\n 3 N14998            29.4           27.9   230\n 4 N15910            29.3           27.6   280\n 5 N13123            29.6           26.0   121\n 6 N11192            27.5           25.9   154\n 7 N14950            26.2           25.3   219\n 8 N21130            27.0           25.0   126\n 9 N24128            24.8           24.9   129\n10 N22971            26.5           24.7   230\n# ℹ 1,191 more rows\n\n\nNow it exists for realsies."
+  },
+  {
+    "objectID": "slides/vcs-bigdata-02.html#joins",
+    "href": "slides/vcs-bigdata-02.html#joins",
+    "title": "Databases and duckdb",
+    "section": "Joins",
+    "text": "Joins\nDatabase systems will have more than one table. We query and join them. The idea is that getting the DBMS to do this will be way faster and more memory-efficient than trying to get dplyr to do it."
+  },
+  {
+    "objectID": "slides/vcs-bigdata-02.html#joins-1",
+    "href": "slides/vcs-bigdata-02.html#joins-1",
+    "title": "Databases and duckdb",
+    "section": "Joins",
+    "text": "Joins\n\n## Copy over the \"planes\" dataset to the same \"con\" DuckDB connection.\ncopy_to(\n    dest = con, \n    df = nycflights13::planes, \n    name = \"planes\",\n    temporary = FALSE, \n    indexes = \"tailnum\"\n    )\n\n## List tables in our \"con\" database connection (i.e. now \"flights\" and \"planes\")\ndbListTables(con)\n\n[1] \"flights\" \"planes\" \n\n## Reference from dplyr\nplanes_db &lt;-  tbl(con, 'planes')\n\nSee what we did there? It’s like con the database connection has a list of tables in it."
+  },
+  {
+    "objectID": "slides/vcs-bigdata-02.html#joins-2",
+    "href": "slides/vcs-bigdata-02.html#joins-2",
+    "title": "Databases and duckdb",
+    "section": "Joins",
+    "text": "Joins\n\n# Still not done for realsies!\nleft_join(\n    flights_db,\n    planes_db %&gt;% rename(year_built = year),\n    by = \"tailnum\" ## Important: Be specific about the joining column\n) |&gt; \n    select(year, month, day, dep_time, arr_time, carrier, flight, tailnum,\n           year_built, type, model) \n\n# Source:   SQL [?? x 11]\n# Database: DuckDB v1.1.3 [root@Darwin 24.3.0:R 4.4.3/:memory:]\n    year month   day dep_time arr_time carrier flight tailnum year_built type   \n   &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;    &lt;int&gt; &lt;chr&gt;    &lt;int&gt; &lt;chr&gt;        &lt;int&gt; &lt;chr&gt;  \n 1  2013     2    14     1045     1204 UA          67 N16713        1998 Fixed …\n 2  2013     2    14     1048     1412 B6         373 N659JB        2007 Fixed …\n 3  2013     2    14     1048     1333 UA         764 N665UA        1998 Fixed …\n 4  2013     2    14     1051     1203 US        2171 N747UW        2000 Fixed …\n 5  2013     2    14     1057     1244 WN         366 N414WN        2001 Fixed …\n 6  2013     2    14     1057     1353 UA        1550 N14228        1999 Fixed …\n 7  2013     2    14     1058     1211 EV        4694 N14993        2000 Fixed …\n 8  2013     2    14     1058     1337 DL        1647 N689DL        1998 Fixed …\n 9  2013     2    14     1105     1210 B6          24 N197JB        2006 Fixed …\n10  2013     2    14     1105     1302 MQ        4485 N711MQ        1976 Fixed …\n# ℹ more rows\n# ℹ 1 more variable: model &lt;chr&gt;"
+  },
+  {
+    "objectID": "slides/vcs-bigdata-02.html#finishing-up",
+    "href": "slides/vcs-bigdata-02.html#finishing-up",
+    "title": "Databases and duckdb",
+    "section": "Finishing up",
+    "text": "Finishing up\nClose your connection!\n\ndbDisconnect(con)"
   }
 ]
