@@ -1,5 +1,5 @@
 ---
-title: "Visualizing 'Big' Data with R aand ggplot"
+title: "Visualizing 'Big' Data with R and ggplot"
 subtitle: "VCS 2025 Workshop Notes"
 author: "<Your Name Here>"
 format: html
